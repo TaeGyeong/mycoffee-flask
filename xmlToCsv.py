@@ -21,20 +21,20 @@ class xmlToCsv:
         dict_text, dict_keys = [], []
         columns = root.find('header').find('columns')
         for item in columns:
-            dict_keys.append(item.tag)
-            dict_text.append(item.text)
+            dict_keys.append(str(item.tag))
+            dict_text.append(str(item.text))
         mdlist = []
         mdlist.append(dict_text)
         for child in root.find('body').find('rows').findall('row'):
             temp = []
             for key in dict_keys:
-                temp.append(child.find(key).text)
+                temp.append(str(child.find(key).text))
             mdlist.append(temp)
         return mdlist
 
     def to_CSV(self, mdlist):
         newfilename = os.path.abspath("data/data.csv")
-        fh = open(newfilename, "w", newline="")
+        fh = open(newfilename, "w", newline="", encoding='utf-8')
         writer = csv.writer(fh)
         for row in mdlist:
             writer.writerow(row)
@@ -44,3 +44,7 @@ class xmlToCsv:
     def getCsv(self):
         if self.result:
             return self.to_CSV(self.result)
+
+if __name__ == "__main__":
+    a = xmlToCsv()
+    a.to_CSV(a.result)
