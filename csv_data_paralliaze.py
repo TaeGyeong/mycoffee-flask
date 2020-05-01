@@ -12,7 +12,7 @@ if __name__ == "__main__":
     raw_data = sc.textFile(data)
     raw_data_header = raw_data.take(1)[0]
     temp = str(raw_data_header).split(",")
-    need_column = ['개방서비스명', '관리번호', '영업상태구분코드', '영업상태명', '소재지전화',\
+    need_column = ['관리번호', '영업상태구분코드', '영업상태명', '소재지전화',\
         '소재지면적','소재지전체주소', '도로명전체주소', '사업장명', '최종수정시점', '업태구분명',\
         '좌표정보(X)', '좌표정보(Y)', '시설총규모', '홈페이지']
     need_column_index = []

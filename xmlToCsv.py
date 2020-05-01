@@ -1,5 +1,4 @@
 import xml.etree.cElementTree as ET
-from openpyxl import Workbook
 import csv
 import json
 import os
@@ -28,7 +27,9 @@ class xmlToCsv:
         for child in root.find('body').find('rows').findall('row'):
             temp = []
             for key in dict_keys:
-                temp.append(str(child.find(key).text))
+                t = str(child.find(key).text)
+                b = t.replace(",", " ").replace('"', "")
+                temp.append(b)
             mdlist.append(temp)
         return mdlist
 
@@ -47,4 +48,4 @@ class xmlToCsv:
 
 if __name__ == "__main__":
     a = xmlToCsv()
-    a.to_CSV(a.result)
+    print(a.to_CSV(a.result))

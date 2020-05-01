@@ -1,17 +1,4 @@
-import pyspark
-import pyspark.streaming
+a = "서울특별시 종로구 수표로 112 (낙원동,(지상1층))"
+b = a.replace('"', '').replace(",", " ")
 
-SparkContext = pyspark.SparkContext("local[2]", "NetworkWordCount")
-StreamingContext = pyspark.streaming.StreamingContext(SparkContext, 1)
-
-lines = StreamingContext.socketTextStream("localhost", 9999)
-words = lines.flatMap(lambda line:line.split(" "))
-
-
-pairs = words.map(lambda word: (word, 1))
-wordCounts = pairs.reduceByKey(lambda x, y : x+y)
-
-wordCounts.pprint()
-
-StreamingContext.start()
-StreamingContext.awaitTermination()
+print(b)

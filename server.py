@@ -1,12 +1,11 @@
 import cherrypy, os, time, sys
 from paste.translogger import TransLogger
-from app
 from pyspark import SparkContext, SparkConf
-
+from app import create_app
 def init_spark_context():
     # load spark context
     conf = SparkConf().setAppName("mycoffee_reccomendation-server")
-    sc = SparkContext(conf=conf, pyFiles=[''])
+    sc = SparkContext(conf=conf, pyFiles=['engine.py', 'app.py'])
     
     return sc
 
