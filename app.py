@@ -1,6 +1,6 @@
 from flask import Blueprint
+from engine import dataEngine
 main = Blueprint('main', __name__)
-
 
 import json
 import logging
@@ -10,16 +10,17 @@ logger = logging.getLogger(__name__)
 
 from flask import Flask, request
 
-@main.route('/', methods=["GET"])
-def main_test():
-    return "Hello world"
+@main.route('/all_data', methods=["GET", "POST"])
+def get_all():
+    logger.debug("All Cafe's location and name data return")
+    result = data_engine.get_all_data()
+    return json.dumps(result)
 
-# @main.route('/')
 
-def create_app(spark_context, dataset_path):
-    ##########
-    # engine #
-    ##########
+def create_app(spark_context):
+    global data_engine
+    data_engine = dataEngine(spark_context)
+
     app = Flask(__name__)
     app.register_blueprint(main)
     return app

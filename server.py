@@ -25,7 +25,6 @@ def run_server(app):
 
 if __name__ == "__main__":
     sc = init_spark_context()
-    dataset_path = os.path.join('datasets', 'ml-latest')
-    app = create_app(sc, dataset_path)
-    
+    # dataset_path = os.path.join('datasets', 'ml-latest')
+    app = create_app(sc)
     run_server(app)
