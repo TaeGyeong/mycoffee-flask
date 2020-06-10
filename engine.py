@@ -64,8 +64,4 @@ class dataEngine:
             .map(lambda tokens: (tokens[0], tokens[1], tokens[2:]))
 
         self.price_RDD = data
-
-        
-
-
         
