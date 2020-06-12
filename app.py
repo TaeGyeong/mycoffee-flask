@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Flask, Blueprint, Request
 from engine import dataEngine
 from flask_cors import CORS
 main = Blueprint('main', __name__)
@@ -9,7 +9,6 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-from flask import Flask, request
 
 def create_app(spark_context):
     global data_engine
@@ -34,6 +33,13 @@ def get_all(lat, lng):
     logger.debug("All Cafe's location and name data return")
     result = data_engine.get_all_data(lat, lng)
     return json.dumps(result, ensure_ascii=False)
+
+
+@main.route('/likecafe', methods=["POST"])
+def get_like_info():
+    print(Request.json['list'])
+    return json.dumps("hi", ensure_ascii=False)
+
 
 @main.route('/test', methods=["GET", "POST"])
 def test():
