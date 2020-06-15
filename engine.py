@@ -10,6 +10,12 @@ from difflib import SequenceMatcher
 
 class dataEngine:
 
+
+    def get_select_data(self, data):
+        return self.cafe_RDD \
+            .filter(lambda tokens: str(tokens[0]) in data) \
+            .take(100000)
+
     def search(self, name, localName):
         return self.cafe_RDD \
             .filter(lambda tokens: SequenceMatcher(None, str(tokens[7]), str(name)).ratio() * 100 > 40) \

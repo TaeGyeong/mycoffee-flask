@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, Request
+from flask import Flask, Blueprint, request
 from engine import dataEngine
 from flask_cors import CORS
 main = Blueprint('main', __name__)
@@ -37,8 +37,10 @@ def get_all(lat, lng):
 
 @main.route('/likecafe', methods=["POST"])
 def get_like_info():
-    print(Request.json['list'])
-    return json.dumps("hi", ensure_ascii=False)
+    data = request.get_json(force=True, silent=True)
+    item = data['data']
+    result = data_engine.get_select_data(item)
+    return json.dumps(result, ensure_ascii=False)
 
 
 @main.route('/test', methods=["GET", "POST"])
