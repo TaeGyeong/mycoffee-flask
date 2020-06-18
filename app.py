@@ -3,8 +3,7 @@ from engine import dataEngine
 from flask_cors import CORS
 main = Blueprint('main', __name__)
 
-import json
-import logging
+import json, logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -12,6 +11,7 @@ logger = logging.getLogger(__name__)
 
 def create_app(spark_context):
     global data_engine
+
     data_engine = dataEngine(spark_context)
 
     app = Flask(__name__)
@@ -34,6 +34,12 @@ def get_all(lat, lng):
     result = data_engine.get_all_data(lat, lng)
     return json.dumps(result, ensure_ascii=False)
 
+@main.route('/<user_id>/ratings', methods=["POST"])
+def top_ratings_add(user_id):
+    data = request.get_json(force=True, silent=True)
+    item = data['data']
+    result = data_engine.get_top_ratings(user_id, item)
+    return json.dumps(result, ensure_ascii=False)
 
 @main.route('/likecafe', methods=["POST"])
 def get_like_info():
